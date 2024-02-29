@@ -1,0 +1,14 @@
+#!/usr/bin/with-contenv bash
+
+# # folders
+# mkdir -p \
+#     /config/
+
+# # permissions
+# chown -R abc:abc \
+#     /config
+
+# chmod -R 775 \
+#     /config
+
+echo "config done"
