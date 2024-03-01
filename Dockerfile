@@ -72,7 +72,7 @@ RUN \
     echo -e "Commit:      $(curl -s https://api.github.com/repos/njfamirm/decap-cms-github-backend/commits/${GIT_TAG} | jq -r '.sha' | cut -c 1-7)\n" && \
     echo -e "Node:        $(node --version)" && \
     echo -e "NPM:         v$(npm --version)" && \
-    echo -e "Yarn:        v$(yarn --version)" && \
+    echo -e "Yarn:        v$(yarn --version)" \
     ) | tee -a /VERSION.txt
 
 EXPOSE 3000
