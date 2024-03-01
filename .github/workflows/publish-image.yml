@@ -41,7 +41,7 @@ jobs:
         run: |
           docker buildx build \
           --platform linux/amd64,linux/arm64 \
-          --file ./.github/workflows/docker/Dockerfile \
+          --file ./Dockerfile \
           --tag ${{ secrets.DOCKERHUB_USERNAME }}/${{ github.event.repository.name }}:${{ steps.keydb.outputs.tag_name }} \
           --tag ${{ secrets.DOCKERHUB_USERNAME }}/${{ github.event.repository.name }}:latest \
           --build-arg GIT_TAG=${{ steps.keydb.outputs.tag_name }} \
@@ -51,7 +51,7 @@ jobs:
         run: |
           docker buildx build \
           --platform linux/amd64,linux/arm64 \
-          --file ./.github/workflows/docker/Dockerfile \
+          --file ./Dockerfile \
           --tag ${{ secrets.DOCKERHUB_USERNAME }}/${{ github.event.repository.name }}:build-$(git rev-parse --short "$(git ls-remote https://github.com/${{ env.PARENT_REPO }}.git HEAD | cut -f 1)") \
           --build-arg GIT_TAG=${{ env.MAIN_BRANCH }} \
           --push .
