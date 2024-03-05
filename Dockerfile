@@ -49,6 +49,9 @@ ENV \
 
 COPY --from=build /final/ /
 
+RUN chmod +x /etc/s6-overlay/s6-rc.d/*/run
+RUN chmod +x /etc/s6-overlay/s6-rc.d/*/finish
+
 RUN \
     apk --update --upgrade --no-cache add \
     ca-certificates \
@@ -75,4 +78,45 @@ RUN \
     echo -e "Yarn:        v$(yarn --version)" \
     ) | tee -a /VERSION.txt
 
+RUN echo; echo "Debug Info: "; echo
+
+RUN echo "List s6-overlay files"
+RUN find /etc/s6-overlay/ -type f -exec ls -l {} \;
+
+RUN echo "Check if s6 binaries are available"
+RUN which execlineb && execlineb -v
+RUN which s6-setuidgid && s6-setuidgid -h
+
+RUN echo "Check run & finish file permissions and executability"
+RUN ls -l /etc/s6-overlay/s6-rc.d/*/run
+RUN ls -l /etc/s6-overlay/s6-rc.d/*/finish
+
+RUN echo "checking file s6-rc.d/config/run"
+RUN cat /etc/s6-overlay/s6-rc.d/config/run
+RUN echo "checking file s6-rc.d/config/type"
+RUN cat /etc/s6-overlay/s6-rc.d/config/type
+RUN echo "checking file s6-rc.d/decap/run"
+RUN cat /etc/s6-overlay/s6-rc.d/decap/run
+RUN echo "checking file s6-rc.d/decap/type"
+RUN cat /etc/s6-overlay/s6-rc.d/decap/type
+RUN echo "checking file s6-rc.d/decap/dependencies.d/config"
+RUN cat /etc/s6-overlay/s6-rc.d/decap/dependencies.d/config
+RUN echo "checking file s6-rc.d/user/contents.d/config"
+RUN cat /etc/s6-overlay/s6-rc.d/user/contents.d/config
+RUN echo "checking file s6-rc.d/user/contents.d/decap"
+RUN cat /etc/s6-overlay/s6-rc.d/user/contents.d/decap
+
+RUN echo "checking env"
+RUN env
+
+RUN echo "checking /app dir"
+RUN find /app -type d \( -name node_modules -prune \) -o -type f -print | xargs ls -l
+
+RUN echo "checking yarn config"
+RUN yarn config list
+
+RUN echo; echo "Done Debug Info"; echo
+
 EXPOSE 3000
+
+ENTRYPOINT ["/init"]
