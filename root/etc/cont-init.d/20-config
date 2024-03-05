@@ -1,14 +1,16 @@
 #!/usr/bin/with-contenv bash
 
-# # folders
+# folders
 # mkdir -p \
 #     /config/
 
-# # permissions
-# chown -R abc:abc \
-#     /config
+# permissions
+chown -R abc:abc \
+    /root \
+    /app
 
-# chmod -R 775 \
-#     /config
+chmod -R 775 \
+    /root \
+    /app
 
-echo "config done"
+echo "permissions config done"
