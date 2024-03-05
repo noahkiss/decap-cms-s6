@@ -16,7 +16,7 @@ RUN cd /app && \
     rm -rf node_modules && \
     yarn install --frozen-lockfile --non-interactive --production true
 
-COPY ./root /final
+COPY ./root/etc /final
 
 RUN mkdir -p /final/app
 RUN mv /app/package.json /final/app/

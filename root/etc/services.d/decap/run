@@ -1,5 +1,0 @@
-#!/usr/bin/with-contenv bash
-
-PORT=${PORT:-3000}
-
-exec s6-setuidgid abc sh -c 'cd /app && yarn serve'
